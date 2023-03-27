@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { DbModule } from 'src/db/db.module';
 
 import { OrderModule } from '../order/order.module';
 
@@ -7,7 +8,10 @@ import { CartService } from './services';
 
 
 @Module({
-  imports: [ OrderModule ],
+  imports: [ 
+    OrderModule,
+    DbModule, 
+  ],
   providers: [ CartService ],
   controllers: [ CartController ]
 })

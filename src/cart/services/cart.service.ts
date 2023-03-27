@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
+import { PG_CONNECTION } from 'src/constants';
 
 import { v4 } from 'uuid';
 
@@ -6,7 +7,13 @@ import { Cart } from '../models';
 
 @Injectable()
 export class CartService {
+  constructor(@Inject(PG_CONNECTION) private conn: any) {}
   private userCarts: Record<string, Cart> = {};
+
+  async getAllCarts(): Promise<Cart[]> {
+    const res = await this.conn.query(`SELECT * FROM carts`);
+    return res;
+  }
 
   findByUserId(userId: string): Cart {
     return this.userCarts[ userId ];

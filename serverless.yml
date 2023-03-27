@@ -1,4 +1,4 @@
-service: serverless-example
+service: rds-api
 
 plugins:
   - serverless-offline

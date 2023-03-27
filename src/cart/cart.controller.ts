@@ -14,18 +14,29 @@ export class CartController {
     private orderService: OrderService
   ) { }
 
-  // @UseGuards(JwtAuthGuard)
-  // @UseGuards(BasicAuthGuard)
   @Get()
-  findUserCart(@Req() req: AppRequest) {
-    const cart = this.cartService.findOrCreateByUserId(getUserIdFromRequest(req));
+  getAllCarts(@Req() req: AppRequest) {
+    const carts = this.cartService.getAllCarts();
 
     return {
       statusCode: HttpStatus.OK,
       message: 'OK',
-      data: { cart, total: calculateCartTotal(cart) },
+      data: { carts },
     }
   }
+
+  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(BasicAuthGuard)
+  // @Get()
+  // findUserCart(@Req() req: AppRequest) {
+  //   const cart = this.cartService.findOrCreateByUserId(getUserIdFromRequest(req));
+
+  //   return {
+  //     statusCode: HttpStatus.OK,
+  //     message: 'OK',
+  //     data: { cart, total: calculateCartTotal(cart) },
+  //   }
+  // }
 
   // @UseGuards(JwtAuthGuard)
   // @UseGuards(BasicAuthGuard)
