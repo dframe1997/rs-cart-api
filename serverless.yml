@@ -10,6 +10,12 @@ provider:
 functions:
   main:
     handler: dist/main.handler
+    environment:
+      db_user: ${file(./dbconfig.yml):db_user}
+      db_host: ${file(./dbconfig.yml):db_host}
+      db_database: ${file(./dbconfig.yml):db_database}
+      db_password: ${file(./dbconfig.yml):db_password}
+      db_port: ${file(./dbconfig.yml):db_port}
     events:
       - http:
           method: ANY

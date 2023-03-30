@@ -14,35 +14,46 @@ export class CartController {
     private orderService: OrderService
   ) { }
 
-  @Get()
-  getAllCarts(@Req() req: AppRequest) {
-    const carts = this.cartService.getAllCarts();
-
-    return {
-      statusCode: HttpStatus.OK,
-      message: 'OK',
-      data: { carts },
-    }
-  }
-
-  // @UseGuards(JwtAuthGuard)
-  // @UseGuards(BasicAuthGuard)
   // @Get()
-  // findUserCart(@Req() req: AppRequest) {
-  //   const cart = this.cartService.findOrCreateByUserId(getUserIdFromRequest(req));
+  // async getAllCarts() {
+  //   const carts = await this.cartService.getAllCarts();
 
   //   return {
   //     statusCode: HttpStatus.OK,
   //     message: 'OK',
-  //     data: { cart, total: calculateCartTotal(cart) },
+  //     data: carts,
+  //   }
+  // }
+
+  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(BasicAuthGuard)
+  @Get()
+  async findUserCart(@Req() req: AppRequest) {
+    const cart = await this.cartService.findOrCreateByUserId(getUserIdFromRequest(req));
+    console.log("CART: ", cart)
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'OK',
+      data: { cart, total: calculateCartTotal(cart) },
+    }
+  }
+
+  // @Get()
+  // async findByUserId(@Req() req: AppRequest) {
+  //   const cart = await this.cartService.findByUserId(getUserIdFromRequest(req));
+
+  //   return {
+  //     statusCode: HttpStatus.OK,
+  //     message: 'OK',
+  //     data: cart,
   //   }
   // }
 
   // @UseGuards(JwtAuthGuard)
   // @UseGuards(BasicAuthGuard)
   @Put()
-  updateUserCart(@Req() req: AppRequest, @Body() body) { // TODO: validate body payload...
-    const cart = this.cartService.updateByUserId(getUserIdFromRequest(req), body)
+  async updateUserCart(@Req() req: AppRequest, @Body() body) { // TODO: validate body payload...
+    const cart = await this.cartService.updateByUserId(getUserIdFromRequest(req), body)
 
     return {
       statusCode: HttpStatus.OK,
@@ -57,21 +68,22 @@ export class CartController {
   // @UseGuards(JwtAuthGuard)
   // @UseGuards(BasicAuthGuard)
   @Delete()
-  clearUserCart(@Req() req: AppRequest) {
-    this.cartService.removeByUserId(getUserIdFromRequest(req));
+  async clearUserCart(@Req() req: AppRequest) {
+    const res = await this.cartService.removeByUserId(getUserIdFromRequest(req));
 
     return {
       statusCode: HttpStatus.OK,
       message: 'OK',
+      res
     }
   }
 
   // @UseGuards(JwtAuthGuard)
   // @UseGuards(BasicAuthGuard)
   @Post('checkout')
-  checkout(@Req() req: AppRequest, @Body() body) {
+  async checkout(@Req() req: AppRequest, @Body() body) {
     const userId = getUserIdFromRequest(req);
-    const cart = this.cartService.findByUserId(userId);
+    const cart = await this.cartService.findByUserId(userId);
 
     if (!(cart && cart.items.length)) {
       const statusCode = HttpStatus.BAD_REQUEST;
@@ -92,7 +104,7 @@ export class CartController {
       items,
       total,
     });
-    this.cartService.removeByUserId(userId);
+    await this.cartService.removeByUserId(userId);
 
     return {
       statusCode: HttpStatus.OK,

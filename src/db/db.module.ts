@@ -5,11 +5,11 @@ import { Pool } from 'pg';
 const dbProvider = {
     provide: PG_CONNECTION,
     useValue: new Pool({
-        user: 'postgres',
-        host: 'rds-cart-orders.cflntyp35g31.us-east-1.rds.amazonaws.com',
-        database: 'rds-cart-orders',
-        password: 'pO5#S9795R',
-        port: 5432,
+        user: process.env.db_user,
+        host: process.env.db_host,
+        database: process.env.db_database,
+        password: process.env.db_password,
+        port: process.env.db_port,
     }),
 };
 
