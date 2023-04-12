@@ -1,0 +1,5 @@
+db_user: 'postgres'
+db_host: 'rds-cart-orders.cflntyp35g31.us-east-1.rds.amazonaws.com'
+db_database: 'postgres'
+db_password: 'pO5#S9795R'
+db_port: 5432

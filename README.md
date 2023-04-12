@@ -26,6 +26,7 @@
 
 ## Description
 
+<<<<<<< Updated upstream
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
@@ -73,3 +74,10 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
   Nest is [MIT licensed](LICENSE).
+=======
+You must run `npm run build` every time before running locally or deploying, as it is the built artifact that is used/deployed.
+
+## Using the Dockerfile
+
+1. Build the dockerfile using `docker build -t rs-cart-api .`
+>>>>>>> Stashed changes
