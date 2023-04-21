@@ -115,7 +115,8 @@
                   "Effect": "Allow",
                   "Action": [
                     "logs:CreateLogStream",
-                    "logs:CreateLogGroup"
+                    "logs:CreateLogGroup",
+                    "logs:TagResource"
                   ],
                   "Resource": [
                     {
@@ -161,13 +162,22 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/rds-api/dev/1680078253878-2023-03-29T08:24:13.878Z/rds-api.zip"
+          "S3Key": "serverless/rds-api/dev/1681466966892-2023-04-14T10:09:26.892Z/rds-api.zip"
         },
         "Handler": "dist/main.handler",
         "Runtime": "nodejs18.x",
         "FunctionName": "rds-api-dev-main",
         "MemorySize": 1024,
         "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "db_user": "postgres",
+            "db_host": "rds-cart-orders.cflntyp35g31.us-east-1.rds.amazonaws.com",
+            "db_database": "postgres",
+            "db_password": "pO5#S9795R",
+            "db_port": "5432"
+          }
+        },
         "Role": {
           "Fn::GetAtt": [
             "IamRoleLambdaExecution",
@@ -179,14 +189,14 @@
         "MainLogGroup"
       ]
     },
-    "MainLambdaVersionV6eBCxak7nKf34A900nHVoTYrdukSnKxy43kBSAoDE": {
+    "MainLambdaVersionprTNMHLHCPCvXIrBFkPMbc7Jcp38b7TpfxXN8O34w": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "MainLambdaFunction"
         },
-        "CodeSha256": "r4S380o/irx85RU8JzEw9BWmn0pz5pZ2S5so/eCyBJk="
+        "CodeSha256": "VDsxabDT8fBeK+zqATAQ37XI8zt6sYj4IOE1zVWba0Y="
       }
     },
     "ApiGatewayRestApi": {
@@ -372,7 +382,7 @@
         "MainLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1680078221189": {
+    "ApiGatewayDeployment1681466932816": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -436,7 +446,7 @@
     "MainLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "MainLambdaVersionV6eBCxak7nKf34A900nHVoTYrdukSnKxy43kBSAoDE"
+        "Ref": "MainLambdaVersionprTNMHLHCPCvXIrBFkPMbc7Jcp38b7TpfxXN8O34w"
       },
       "Export": {
         "Name": "sls-rds-api-dev-MainLambdaFunctionQualifiedArn"
